@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Page Title </title>
+    <script type="text/javascript" src="processing.js"></script>
+
+<style> div.screenMask
+{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-color: #000000;
+    opacity: 0.7;
+    filter: alpha(opacity=70);
+    visibility: hidden;</style> }
+
+
+</head>
+
+	<body>
+        
+        <script type="application/processing">
+		int base=40;
+int x,y,gameScore=0;
+int changeX=-5;
+int changeY=-5;
+int gameOver=0;
+int speed=100;
+void setup()
+{
+  size(760, 640);
+  x=(int)random(width);
+  y=height-base;
+}
+void draw()
+{
+  if(gameOver==0)
+  {
+  background(0); 
+  text("SCORE:"+gameScore+"00",width/2,height/2);
+  rect(mouseX,height-base,50,base);
+  ellipse(x,y,10,10);
+  x=x+changeX;
+  y=y+changeY;
+  if(x<0 | x>width)
+  {
+    changeX=-changeX;
+  }
+  if(y<0)
+  {
+    changeY=-changeY;
+  }
+  if(y>height-base)
+  {
+    //check whether it is falling inside the rectangle or not
+    if(x>mouseX && x<mouseX+200)
+    {
+      changeY=-changeY; //bounce back
+      gameScore++;
+    }
+    else
+    {
+      gameOverSplash();
+    }
+  }
+  }
+  else
+  {
+    background(255,0,0);
+    text("YOU SUCK",width/2,height/2);
+    text("Try it again YOu coward",width/2,height/2+20);
+  }
+}
+void gameOverSplash()
+{
+  gameOver=1;
+}
+void mouseClicked()
+{
+  changeY=-changeY;
+  gameScore=0;
+  gameOver=0;
+}
+        </script>
+        <canvas> </canvas>
+	</body>
+        
+
+</html>
